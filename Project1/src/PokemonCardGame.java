@@ -18,6 +18,7 @@ public class PokemonCardGame {
 	// A deck of cards.
 	private ArrayList<Card> deck; // This is the constructors job. = new Card[];
 	private ArrayList<Card> hand;
+	private ArrayList<Card> bench;
 	private ArrayList<PokemonCardGame>player1;
 	private ArrayList<PokemonCardGame>player2;
 	private int deckSize = 60;
@@ -25,6 +26,7 @@ public class PokemonCardGame {
 	public PokemonCardGame(){
 		deck = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
+		bench = new ArrayList<>();
 	}
 
 	public Card drawCard() {
@@ -41,7 +43,7 @@ public class PokemonCardGame {
 		}
 	}
 	public void player1() {
-		ArrayList<> deck = new ArrayList<>();
+		//ArrayList<> deck = new ArrayList<>();
 	}
 	public void player2() {
 		
@@ -60,13 +62,13 @@ public class PokemonCardGame {
 	public void constructDeck(){
 		deck.clear();
 		hand.clear();
-		for(int i = 0; i < 21; i++ ) {
+		for(int i = 0; i < 20; i++ ) {
 			deck.add(new Pokemon());
 		}
-		for(int j = 0; j < 21; j++ ){
+		for(int j = 0; j < 20; j++ ){
 			deck.add(new Energy());
 		}
-		for(int k = 0; k < 21; k++) {
+		for(int k = 0; k < 20; k++) {
 			deck.add(new Trainer());
 		}
 	}
@@ -83,11 +85,47 @@ public class PokemonCardGame {
 		System.out.println(deck);
 		System.out.println(hand);
 	}
-	public void setUpGame() {
+	public void playNestBall() {
+		//find pokemon
+		ArrayList<Card> tempPokemon = new ArrayList<>();
+		boolean done =false;
+		int i = 0;
+		while(i < deck.size()) {
+			if(deck.get(i) instanceof Pokemon) {
+				tempPokemon.add(deck.get(i));
+				deck.remove(i);
+			}
+			else {
+				i++;
+			}
+		}
+		System.out.println("Pokemon found so far: " + tempPokemon);
+		System.out.println("Count: " + tempPokemon.size());
 		
+		Random ranPokemon = new Random();
+		int saveRanPokemon = ranPokemon.nextInt(tempPokemon.size());
+		bench.add(tempPokemon.get(saveRanPokemon));
+		tempPokemon.remove(saveRanPokemon);
+		
+		for(int j = 0; j < tempPokemon.size(); j++) {
+			deck.add(tempPokemon.get(i));
+		}
+	}
+	public ArrayList<Card> getDeck(){
+		return deck;
+	}
+	public ArrayList<Card> getBench(){
+		return bench;
+	}
+	public void setUpGame() {
+		constructDeck();
+		playNestBall();
+		//look at hand
+		//get card from hand
+		//card.playable();
 	}
 	public void runGame() {
-		
+		//System.out.printf("'%s','%s', '%f', '%s'", hand, field, prize, cardStats);
 	}
 }
 

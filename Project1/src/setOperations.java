@@ -6,7 +6,8 @@
  * Write a method that intersects two arrayList
  * Write a method that returns the complement of an arrayList
  * write a method that accepts two parameters: an arrayList of all values in your sample and one that accepts
- * A Your Subset use that to solve for complement
+ * A, Your Subset use that to solve for complement
+ * complement is whatever is not inside subset
  * DON'T USE THE CLASS CALLED SET
  */
 import java.util.ArrayList;
@@ -50,4 +51,14 @@ public class setOperations {
 		System.out.println(intersectionList);
 	}
 	
+	
+	public ArrayList <String> complement(ArrayList<String> userList, ArrayList<String> subSet) {
+		ArrayList<String> complementList = new ArrayList<String>();
+		for (String element: userList) {
+		     if (!subSet.contains(element)){
+		         complementList.add(element);
+		        }
+		}
+		return complementList;
+	}
 }

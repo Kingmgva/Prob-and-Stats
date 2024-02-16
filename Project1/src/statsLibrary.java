@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -91,5 +92,46 @@ public class statsLibrary {
 		standardDeviation = Math.sqrt(standardDeviation);
 		return standardDeviation;
 	}
+	
+	/*
+	 * Write program to solve combination and permutations
+	 * Test your answers against problems and examples from the text
+	 * use your solver to solve a problem from the text
+	 * 
+	 * you'll need a factorial method to simplify the work
+	 * when programming the factorial method you should find the "easy" solve breaks at fairly small factorials
+	 * Try using BigInteger from the Java API
+	 */
+	public double factorial(double num){
+		double numFact = num;
+		for (double i = numFact - 1; i > 0; i--) {
+			numFact = numFact*i;
+		}
+		return numFact;
+	}
+	public double findCombinations(int numOfElements, int subSetSize){
+		double combinations;
+		combinations = factorial(numOfElements)/(factorial(subSetSize)*(factorial(numOfElements-subSetSize)));
+		return combinations;
+	}
+	public double findPermutations(int numOfElements, int subSetSize){
+		double permutations;
+		permutations = factorial(numOfElements)/factorial(numOfElements - subSetSize);
+		return permutations;
+	}
+	public double conditionalProb(int intersection, int probability){
+		
+		return 0;
+	}
 
+	
+	/*
+	 * Write a program that handles our probability axioms
+	 * Write a method that handles the following:
+	 * 	one to handle independent and dependent intersection
+	 * 	one to handle exclusive or not exclusive union
+	 * 	a set of methods to determine independence and dependency
+	 * 	Bayes theorem
+	 * 
+	 */
 }

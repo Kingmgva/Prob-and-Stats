@@ -56,7 +56,7 @@ public class MonteCarlo {
 		for(int i = 0; i < deckSize; i++){
 			trueCount = 0;
 			falseCount = 0;
-	        for(int j = 0; j < 1000; j++) {
+	        for(int j = 0; j < 10000; j++) {
 	        	constructDeck(i);
 	            drawHand();
 	            evaluateOpeningHand();
