@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TeststatsLibrary {
-	@Test
 	public static void main(String[]args) {
 		statsLibrary test = new statsLibrary();
 		int[] mySampleNumbers = {1,2,3,4,5,6,7,8,9};
@@ -25,6 +24,7 @@ public class TeststatsLibrary {
 		System.out.println("The combination is: " + combinationResult);
 		System.out.println("The permutation is: " + permutationsResult);
 		System.out.println("The combination is: " + factorialResult);
+		test.testCases();
 	}
 }
 

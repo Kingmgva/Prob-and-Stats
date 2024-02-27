@@ -2,9 +2,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+/*
+ * This class is built up of methods that implement formulas found in statistics like mean, median, and mode.
+ * It also finds probability cases and uses 
+ * 
+ * @author Melvin Vazquez
+ */
 
-//Lets start off with a warmup :: Lets write a program that can find mean, median, and mode.
-//After that write a tester class to try it out
 public class statsLibrary {
 	public statsLibrary() {
 
@@ -13,13 +17,14 @@ public class statsLibrary {
 	public statsLibrary(int[] userInput) {
 
 	}
-	// Something that's common in all stats classes that you take, is learning about
-	// central tendencies
-
-	// Mean, Median, and Mode
-
-	// Mean -> Its the sum of elements divided by count. Another word for it could
-	// be "Expected"
+	/*
+	 * This method finds the mean of an array by adding up all the numbers inside the array and then dividing 
+	 * by the length of the array
+	 * 
+	 * 
+	 * @param: userInput, which is the array of numbers the user himself input
+	 * @return: result of the sum divided by the length of array
+	 */
 	public double findMean(int[] userInput) {// 2 options, use an array or array list.
 		double sum = 0;
 		for (int i = 0; i < userInput.length; i++) {
@@ -29,11 +34,15 @@ public class statsLibrary {
 		return result;
 	}
 
-	// Median -> Either the middle number if odd, or "average" of the two middlest
-	// numbers.
-	// The list must be ordered, so order the list before finding median. Should be
-	// able to call
-	// collections sort or arraylist sort of some kind
+	/*
+	 * This method finds the median of an array by sorting the array first, and then depending on whether length is 
+	 * even or odd, it will take different actions. If odd the length will divide by 2 and use that number to get the
+	 * midNum, otherwise it will take the two middle numbers, add them up, and divide by 2 to find the middle number.
+	 * 
+	 * 
+	 * @param: userInput, which is the array of numbers the user himself input
+	 * @return: midNum, which is the number found after completing the formula
+	 */
 	public double findMedian(double[] userInput) {
 		Arrays.sort(userInput);
 		double midNum = 0;
@@ -45,9 +54,13 @@ public class statsLibrary {
 		}
 	}
 
-	// Mode -> Is the number that occurs the most, but it must be unique, no 2 or
-	// more modes.
-
+	/*
+	 * This method finds the mode of an array by checking each number with each other and finding which number has the
+	 * most occurrences inside the array. The number with the most occurrences is returned, otherwise null is returned
+	 * 
+	 * @param: userInput, which is the array of numbers the user himself input
+	 * @return: uniqueNum, the number that has the most occurrences in the array or null if there is no unique number	 * @return: null, if there is no unique number or more than one, it will return null
+	 */
 	public Integer findMode(int[] userInput) {
 		int count = 0;
 		int maxCount = 0;
@@ -70,26 +83,39 @@ public class statsLibrary {
 		return uniqueNum;
 	}
 
-	// Measures how close to the mean values tend to be
-	// Lower means closer to E. Larger Standard Deviation tells you that your
-	// distribution is more spread out and
-	// unevenly spread out.
-	// write a method to find standardDeviation(someList)
+	/*
+	 * This method finds the standard deviation of the array through calling the mean method and using the formula
+	 * provided in the stats textbook
+	 * 
+	 * @param: userInput, which is the array of numbers the user himself input
+	 * @return: standardDeviation, which is the number found after completing the formula
+	 */
+
 	public double standardDeviation(int[] userInput) {
+		//array list to store the data found after completing the first iteration
 		ArrayList<Double> data = new ArrayList<Double>();
+		//setting variables to find num result, what I will return at the end, and the mean results
 		double numResult = 0;
 		double standardDeviation = 0;
 		double meanResult = findMean(userInput);
+		//This for loop goes through the length of the array and it subtracts each integer in array by mean result
 		for (int i = 0; i < userInput.length; i++) {
 			numResult = userInput[i] - meanResult;
+			//after finding the first result, it will square the result, this results in the variance
 			numResult = numResult * numResult;
+			//First iteration is done and will add the final result to the data list
 			data.add(numResult);
 		}
+		//This for loop adds up all the numbers inside the data array list
 		for (int j = 0; j < data.size(); j++) {
 			numResult = numResult + data.get(j);
 		}
+		//This is the final iteration in which the number result will divide by the total indexes of size and sets it
+		//equal to standardDeviation
 		standardDeviation = numResult / (data.size() - 1);
+		//We usestandardDeviation and square root that to find the final answer
 		standardDeviation = Math.sqrt(standardDeviation);
+		//this line just returns the answer we get, which is the standardDeviation
 		return standardDeviation;
 	}
 	
@@ -109,11 +135,53 @@ public class statsLibrary {
 		}
 		return numFact;
 	}
+	public long longFactorial(long num){
+		long numFact = num;
+		for (long i = numFact - 1; i > 0; i--) {
+			numFact = numFact*i;
+		}
+		return numFact;
+	}
+	public BigInteger bigFactorial(int num){
+		BigInteger numFact = new BigInteger("1");
+		numFact = BigInteger.valueOf(num);
+		for (int i = numFact.intValue() - 1; i > 0; i--) {
+			int numFactNum = numFact.intValue()* i;
+			numFact = BigInteger.valueOf(numFactNum);
+		}
+		return numFact;
+	}
 	public double findCombinations(int numOfElements, int subSetSize){
 		double combinations;
 		combinations = factorial(numOfElements)/(factorial(subSetSize)*(factorial(numOfElements-subSetSize)));
 		return combinations;
 	}
+	public long longCombinations(int numOfElements, int subSetSize){
+		long combinations;
+		combinations = longFactorial(numOfElements)/(longFactorial(subSetSize)*(longFactorial(numOfElements-subSetSize)));
+		return combinations;
+	}
+	public BigInteger bigCombinations(int numOfElements, int subSetSize){
+		BigInteger bigCombinations = new BigInteger("1");
+		bigCombinations = bigFactorial(numOfElements).divide(((bigFactorial(subSetSize)).multiply((bigFactorial(numOfElements-subSetSize)))));
+		return bigCombinations;
+	}
+	
+	
+	public long longPermutations(int numOfElements, int subSetSize) {
+		long longPermutations;
+		longPermutations = longFactorial(numOfElements)/(longFactorial(numOfElements-subSetSize));
+		return longPermutations;
+	}
+	
+	
+	public BigInteger bigPermutations(int numOfElements, int subSetSize) {
+		BigInteger bigPermutations = new BigInteger("1");
+		bigPermutations = bigFactorial(numOfElements).divide(bigFactorial(numOfElements-subSetSize));
+		return bigPermutations;
+	}
+	
+	
 	public double findPermutations(int numOfElements, int subSetSize){
 		double permutations;
 		permutations = factorial(numOfElements)/factorial(numOfElements - subSetSize);
@@ -134,4 +202,26 @@ public class statsLibrary {
 	 * 	Bayes theorem
 	 * 
 	 */
+	public void testCases() {
+		//The multiple lines of code below sets a tester for the class and assigns variables inside arrays
+		statsLibrary test = new statsLibrary();
+		int[] mySampleNumbers = {1,2,3,4,5,6,7,8,9};
+		double[] scrambledNumbers = {5,3,8,2,4,9,7,6};
+		int[] uniqueNumber = {3,6,6,5,6,5,0,0,0};
+		int[] standardNum = {3,6,8,4,2,4,6,8,5};
+		//The multiple lines of code below are to store the results when calling the methods
+		double storeResults = test.findMean(mySampleNumbers);
+		double medianResults = test.findMedian(scrambledNumbers);
+		Integer modeResults = test.findMode(uniqueNumber);
+		double standardDeviationResults = test.standardDeviation(standardNum);
+		double combinationResult = test.findCombinations(12,2);
+		double permutationsResult = test.findPermutations(6,2);
+		double factorialResult = test.factorial(6);
+		//The multiple lines of code below print out the results for the user to see 
+		System.out.println("The average is: " + storeResults + "\nThe median is: " + medianResults + "\nThe mode is: " + modeResults + "\nThe standard Deviation is: " + standardDeviationResults);
+		System.out.println("The combination is: " + combinationResult);
+		System.out.println("The permutation is: " + permutationsResult);
+		System.out.println("The combination is: " + factorialResult);
+		
+	}
 }
