@@ -1,23 +1,18 @@
-//60, there's a catch, in order to take a turn you needed to have a basic pokemon in your hand.
-//Let's write a monte carlo simulation. That means, using raw brute force, try to figure out
-//something interesting
-
-//what if your deck had exactly 1 pokemon. How many times would you expect to have to 
-//"Mulligan" in order to have your only pokemon in your hand.
-
-//What if your deck had 2? Etc.
-
-//Write a simulation that shows the expected mulligans at 1-60 pokemons in your deck.
-//result should be 59 or 60 data points that you can plot into excel to determine the
-//ideal pokemon count so that you can consistently draw into a pokemon in your first hand
+/*
+ * This class is where the bulk of the pokemon card game is created and is the main engine that sets up the game and runs the game.
+ * 
+ * @author Melvin Vazquez
+ */
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class PokemonCardGame {
-	// A deck of cards.
-	private ArrayList<Card> deck; // This is the constructors job. = new Card[];
+	//initializes a private array list deck which is used in constructing a deck filled with energy, trainer, and pokemon cards
+	private ArrayList<Card> deck;
+	//initializes a private array list hand, which is used to draw from deck and add to hand for the user to use in game
 	private ArrayList<Card> hand;
+	//initializes a private array list bench, which is for the user to pick up to 5 basic pokemons to put face down
 	private ArrayList<Card> bench;
 	private ArrayList<PokemonCardGame>player1;
 	private ArrayList<PokemonCardGame>player2;
@@ -43,10 +38,10 @@ public class PokemonCardGame {
 		}
 	}
 	public void player1() {
-		//ArrayList<> deck = new ArrayList<>();
+		constructDeck();
 	}
 	public void player2() {
-		
+		constructDeck();
 	}
 
 	public boolean evaluateOpeningHand(){
@@ -72,6 +67,10 @@ public class PokemonCardGame {
 			deck.add(new Trainer());
 		}
 	}
+	public void reDrawHand() {
+		hand.clear();
+		drawHand();
+	}
 	
 	//Make engine for program
 	public void run(){
@@ -79,7 +78,7 @@ public class PokemonCardGame {
 		drawHand();
 		while(evaluateOpeningHand() == false){
 				constructDeck();
-				drawHand();
+				reDrawHand();
 	        }
 		System.out.println("Got a Pokemon");
 		System.out.println(deck);
@@ -111,11 +110,17 @@ public class PokemonCardGame {
 			deck.add(tempPokemon.get(i));
 		}
 	}
+	public void playProfessorsResearch(){
+		
+	}
 	public ArrayList<Card> getDeck(){
 		return deck;
 	}
 	public ArrayList<Card> getBench(){
 		return bench;
+	}
+	public ArrayList<Card> getHand(){
+		return hand;
 	}
 	public void setUpGame() {
 		constructDeck();

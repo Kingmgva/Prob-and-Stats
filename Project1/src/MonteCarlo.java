@@ -2,16 +2,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonteCarlo {
-	private ArrayList<Card> deck; // This is the constructors job. = new Card[];
+	private ArrayList<Card> deck; 
 	private ArrayList<Card> hand;
+	private ArrayList<Card> prizePool;
 	private int pokemonCount;
+	private int candyCount;
 	private int trueCount;
 	private int falseCount;
+	private int bricked;
+	private int notBricked;
 	private int deckSize = 60;
+	private int insidePrize;
 	
 	public MonteCarlo() {
 		deck = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
+		prizePool = new ArrayList<Card>();
 	}
 	public Card drawCard() {
 		Random rng = new Random();
@@ -19,6 +25,11 @@ public class MonteCarlo {
 		Card drawnCard = deck.get(cardIndex);
 		deck.remove(cardIndex);
 		return drawnCard;
+	}
+	public void prizePool(){
+		for(int i = 0; i < 6; i++) {
+			prizePool.add(drawCard());
+		}
 	}
 	public void drawHand() {
 		for (int i = 0; i < 7; i++) {// We're counting to 7
@@ -44,15 +55,13 @@ public class MonteCarlo {
 			if (currentCard instanceof Pokemon) {
 				trueCount++;
 				return true;
-				
 			}
 		}
 		falseCount++;
 		return false;
 	}
-	
 	//Make engine for program
-	public void run(){
+	public void runPokemonMonteCarlo(){
 		for(int i = 0; i < deckSize; i++){
 			trueCount = 0;
 			falseCount = 0;
@@ -62,6 +71,95 @@ public class MonteCarlo {
 	            evaluateOpeningHand();
 	        }
 			System.out.println("True Count for " + pokemonCount + " pokemon in deck is: " + trueCount +  "\nFalse Count for " + pokemonCount + " pokemon in deck is: " + falseCount );
+		}
+	}
+	
+	
+	
+	public void constructCharDeck(int numOfRareCandy){
+		hand.clear();
+		deck.clear();
+		candyCount = 0;
+		for(int i = 0; i < numOfRareCandy; i++ ) {
+			deck.add(new RareCandy());
+			candyCount++;
+		}
+		for(int j = 0; j < 15; j++ ){
+			deck.add(new Energy());
+		}
+		for(int k = 0; k < 15; k++ ){
+			deck.add(new Pokemon());
+		}
+		for(int h = 0; h < 30-numOfRareCandy; h++) {
+			deck.add(new Trainer());
+		}
+	}
+	public void reshuffle(){
+		hand.clear();
+		drawHand();
+	}
+	
+	public boolean checkHand() {
+			boolean haveRareCandy = false;
+			for (int i = 0; i < hand.size(); i++) {
+				Card currentCard = hand.get(i);
+				if (currentCard instanceof RareCandy) {
+					return true;
+				}
+			}
+			return false;
+		}
+	public boolean checkDeck(){
+		boolean haveRareCandy = false;
+		for (int i = 0; i < deck.size(); i++) {
+			Card currentCard = deck.get(i);
+			if (currentCard instanceof RareCandy) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean checkPrize(){
+		boolean haveRareCandy = false;
+		for (int i = 0; i < prizePool.size(); i++) {
+			Card currentCard = prizePool.get(i);
+			if (currentCard instanceof RareCandy){
+				insidePrize++;
+				return true;
+			}
+		}
+		return false;
+	}
+	public void resetPrize() {
+		prizePool.clear();
+	}
+	
+	public void runCharizardMonteCarlo(){
+		for(int i = 1; i < 60; i++) {
+			bricked = 0;
+			notBricked = 0;
+			for(int k = 0; k <10; k++) {
+				constructCharDeck(i);
+				drawHand();
+				if(evaluateOpeningHand()){
+					prizePool();
+					insidePrize = 0;
+					if(checkHand() || checkDeck()) {
+						notBricked++;
+					}
+					else {
+						bricked++;
+					}
+					checkPrize();
+					resetPrize();
+				}
+				else {
+					reshuffle();
+				}
+			}
+			System.out.println("You have " + insidePrize + " rare candies inside your prize pool");
+			System.out.println("Your deck is bricked " + bricked + " times when there are " + candyCount + " rare candies in deck");
+			System.out.println("Your deck is not bricked " + notBricked + " times when there are " + candyCount + " rare candies in deck\n");
 		}
 	}
 }

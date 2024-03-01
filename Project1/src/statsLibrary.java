@@ -202,6 +202,10 @@ public class statsLibrary {
 	 * 	Bayes theorem
 	 * 
 	 */
+	public double getExpectedHGD(int n, int r, int N) {
+		return(n*r)/(double)N;
+		
+	}
 	public void testCases() {
 		//The multiple lines of code below sets a tester for the class and assigns variables inside arrays
 		statsLibrary test = new statsLibrary();
