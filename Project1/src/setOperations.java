@@ -39,8 +39,6 @@ public class setOperations {
 	
 	public ArrayList<String> setIntersection(ArrayList<String> userList1, ArrayList<String> userList2){
 		ArrayList<String> intersectionList = new ArrayList<String>();
-		//System.out.println(userList1);
-		//System.out.println(userList2);
 		for (int i = 0; i < userList1.size(); i++) {
 			for(int j = 0; j < userList2.size(); j++){
 				if(userList1.get(i) == userList2.get(j)) {

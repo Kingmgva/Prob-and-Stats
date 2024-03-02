@@ -177,13 +177,11 @@ public class statsLibrary {
 		return longPermutations;
 	}
 	
-	
 	public BigInteger bigPermutations(int numOfElements, int subSetSize) {
 		BigInteger bigPermutations = new BigInteger("1");
 		bigPermutations = bigFactorial(numOfElements).divide(bigFactorial(numOfElements-subSetSize));
 		return bigPermutations;
 	}
-	
 	
 	public double findPermutations(int numOfElements, int subSetSize){
 		double permutations;
@@ -235,21 +233,54 @@ public class statsLibrary {
 			return probAunionB;
 		}
 	}
+	public double totalProb(double probA, double probB, double probAB) {
+		double totalProbA = conditionalProb(probA,probB,probAB) * probB;
+		return totalProbA;
+	}
+	public double bayesRule(double probA, double probBi, double probBj, double probAB) {
+		double probBjGivenA;
+		probBjGivenA = (conditionalProb(probA, probBj, probAB)*probBj)/(conditionalProb(probA, probBi,probAB)*probBi);
+		return probBjGivenA;
+	}
+	public double binomialDist(int nTrials,int yGoal,double success) {
+		double fail = 1.0 - success;
+		BigInteger binomialResult = bigCombinations(nTrials, yGoal);
+		double finalRes = binomialResult.doubleValue()*Math.pow(success, yGoal)*Math.pow(fail,nTrials-yGoal);
+		return finalRes;
+	}
+	public double expectedBinomial(int nTrials, int success) {
+		double mean = nTrials*success;
+		return mean;
+	}
+	public double varianceBinomial(int nTrials, int success) {
+		double variance = nTrials*success*(1-success);
+		return variance;
+	}
 	
-
-	
-	/*
-	 * Write a program that handles our probability axioms
-	 * Write a method that handles the following:
-	 * 	one to handle independent and dependent intersection
-	 * 	one to handle exclusive or not exclusive union
-	 * 	a set of methods to determine independence and dependency
-	 * 	Bayes theorem
-	 * 
-	 */
+	public double geometricDist(int yGoal,double success) {
+		double geometricRes = Math.pow(1-success, yGoal-1)*success;
+		return geometricRes;
+	}
+	public double expectedGeometric(int yGoal,double success) {
+		double expected = 1/success;
+		return expected;
+	}
+	public double varGeometric(int yGoal,double success) {
+		double variance = (1-success)/Math.pow(success, 2);
+		return variance;
+	}
+	public double hyperGeometricDist(int N, int n, int r, int y) {
+		BigInteger numerator1 = bigCombinations(r,y);
+		BigInteger numerator2 = bigCombinations(N-r,N-y);
+		BigInteger denominator = bigCombinations(N,n);
+		double finalResult = (numerator1.doubleValue()*numerator2.doubleValue())/denominator.doubleValue();
+		return finalResult;
+	}
 	public double getExpectedHGD(int n, int r, int N) {
 		return(n*r)/(double)N;
-		
+	}
+	public double getVarHGD(int N, int n, int r) {
+		return n*(r/(double)n)*((N-r)/(double)N)*((N-n)/(double)N-1);
 	}
 	public void testCases() {
 		statsLibrary test = new statsLibrary(); 
