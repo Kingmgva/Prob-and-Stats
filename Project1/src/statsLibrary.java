@@ -214,7 +214,7 @@ public class statsLibrary {
 		}
 	}
 	public double multiplicativeLaw(double probA, double probB, double probAB, boolean dependency) {
-		double probAinterB
+		double probAinterB;
 		if(dependency) {
 			probAinterB = probA*conditionalProb(probB,probA,probAB);
 			return probAinterB;
@@ -235,6 +235,7 @@ public class statsLibrary {
 			return probAunionB;
 		}
 	}
+	
 
 	
 	/*
