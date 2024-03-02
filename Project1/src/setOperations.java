@@ -37,7 +37,7 @@ public class setOperations {
 	
 	
 	
-	public void setIntersection(ArrayList<String> userList1, ArrayList<String> userList2){
+	public ArrayList<String> setIntersection(ArrayList<String> userList1, ArrayList<String> userList2){
 		ArrayList<String> intersectionList = new ArrayList<String>();
 		//System.out.println(userList1);
 		//System.out.println(userList2);
@@ -48,7 +48,7 @@ public class setOperations {
 				}
 			}
 		}
-		System.out.println(intersectionList);
+		return intersectionList;
 	}
 	
 	

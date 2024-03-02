@@ -4,17 +4,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 /*
  * This class is built up of methods that implement formulas found in statistics like mean, median, and mode.
- * It also finds probability cases and uses 
+ * It also finds probability cases and uses many theorems like Bayes rule, binomial, geometric distribution, and
+ * other formulas.
  * 
  * @author Melvin Vazquez
  */
 
 public class statsLibrary {
+	private int [] sampleNum = {1,2,3,4,5,6,7,8,8,8,9,9,8};
+	private double [] sampleNum2 = {2,5,4,1,7,0,8,9,5,2};
 	public statsLibrary() {
 
 	}
 
-	public statsLibrary(int[] userInput) {
+	public statsLibrary(int[] sampleArr) {
 
 	}
 	/*
@@ -25,12 +28,12 @@ public class statsLibrary {
 	 * @param: userInput, which is the array of numbers the user himself input
 	 * @return: result of the sum divided by the length of array
 	 */
-	public double findMean(int[] userInput) {// 2 options, use an array or array list.
+	public double findMean(int[] sampleArray) {// 2 options, use an array or array list.
 		double sum = 0;
-		for (int i = 0; i < userInput.length; i++) {
-			sum = userInput[i] + sum;
+		for (int i = 0; i < sampleArray.length; i++) {
+			sum = sampleArray[i] + sum;
 		}
-		double result = sum / userInput.length;
+		double result = sum / sampleArray.length;
 		return result;
 	}
 
@@ -43,14 +46,14 @@ public class statsLibrary {
 	 * @param: userInput, which is the array of numbers the user himself input
 	 * @return: midNum, which is the number found after completing the formula
 	 */
-	public double findMedian(double[] userInput) {
-		Arrays.sort(userInput);
+	public double findMedian(double[] sampleArr) {
+		Arrays.sort(sampleArr);
 		double midNum = 0;
-		if (userInput.length % 2 == 0) {
-			midNum = (userInput[userInput.length / 2] + userInput[userInput.length / 2 - 1]) / 2;
+		if (sampleArr.length % 2 == 0) {
+			midNum = (sampleArr[sampleArr.length / 2] + sampleArr[sampleArr.length / 2 - 1]) / 2;
 			return midNum;
 		} else {
-			return midNum = userInput[(userInput.length / 2)];
+			return midNum = sampleArr[(sampleArr.length / 2)];
 		}
 	}
 
@@ -61,20 +64,20 @@ public class statsLibrary {
 	 * @param: userInput, which is the array of numbers the user himself input
 	 * @return: uniqueNum, the number that has the most occurrences in the array or null if there is no unique number	 * @return: null, if there is no unique number or more than one, it will return null
 	 */
-	public Integer findMode(int[] userInput) {
+	public Integer findMode(int[] sampleArr) {
 		int count = 0;
 		int maxCount = 0;
 		Integer uniqueNum = 0;
-		for (int i = 0; i < userInput.length; i++) {
+		for (int i = 0; i < sampleArr.length; i++) {
 			count = 0;
-			for (int j = i+1; j < userInput.length; j++) {
-				if (userInput[i] == userInput[j]) {
+			for (int j = i+1; j < sampleArr.length; j++) {
+				if (sampleArr[i] == sampleArr[j]) {
 					count++;
 				}
 			}
 			if (count > maxCount){
 				maxCount = count;
-				uniqueNum = userInput[i];
+				uniqueNum = sampleArr[i];
 			}
 			else if (count == maxCount) {
 				uniqueNum = null;
@@ -91,16 +94,16 @@ public class statsLibrary {
 	 * @return: standardDeviation, which is the number found after completing the formula
 	 */
 
-	public double standardDeviation(int[] userInput) {
+	public double standardDeviation(int[] sampleArr) {
 		//array list to store the data found after completing the first iteration
 		ArrayList<Double> data = new ArrayList<Double>();
 		//setting variables to find num result, what I will return at the end, and the mean results
 		double numResult = 0;
 		double standardDeviation = 0;
-		double meanResult = findMean(userInput);
+		double meanResult = findMean(sampleArr);
 		//This for loop goes through the length of the array and it subtracts each integer in array by mean result
-		for (int i = 0; i < userInput.length; i++) {
-			numResult = userInput[i] - meanResult;
+		for (int i = 0; i < sampleArr.length; i++) {
+			numResult = sampleArr[i] - meanResult;
 			//after finding the first result, it will square the result, this results in the variance
 			numResult = numResult * numResult;
 			//First iteration is done and will add the final result to the data list
@@ -187,9 +190,50 @@ public class statsLibrary {
 		permutations = factorial(numOfElements)/factorial(numOfElements - subSetSize);
 		return permutations;
 	}
-	public double conditionalProb(int intersection, int probability){
-		
-		return 0;
+	public double conditionalProb(double probA, double probB, double probAB){
+		if(probB != 0) {
+			double probAgivenB = probAB / probB;
+			return probAgivenB;
+		}
+		else{
+			throw new ArithmeticException();
+		}
+	}
+	public String independent(double probA, double probB, double probAB) {
+		if(conditionalProb(probA,probB,probAB)==probA) {
+			return "independent";
+		}
+		if(conditionalProb(probB,probA,probAB)==probB){
+			return "independent";
+		}
+		if(probAB == probB*probA) {
+			return "independent";
+		}
+		else {
+			return "dependent";
+		}
+	}
+	public double multiplicativeLaw(double probA, double probB, double probAB, boolean dependency) {
+		double probAinterB
+		if(dependency) {
+			probAinterB = probA*conditionalProb(probB,probA,probAB);
+			return probAinterB;
+		}
+		else{
+			probAinterB = probA * probB;
+			return probAinterB;
+		}
+	}
+	public double additiveLaw(double probA, double probB, double probAB, boolean exclusive){
+		double probAunionB;
+		if(!exclusive) {
+			probAunionB = probA + probB - probAB;
+			return probAunionB;
+		}
+		else {
+			probAunionB = probA + probB;
+			return probAunionB;
+		}
 	}
 
 	
@@ -207,25 +251,19 @@ public class statsLibrary {
 		
 	}
 	public void testCases() {
-		//The multiple lines of code below sets a tester for the class and assigns variables inside arrays
-		statsLibrary test = new statsLibrary();
-		int[] mySampleNumbers = {1,2,3,4,5,6,7,8,9};
-		double[] scrambledNumbers = {5,3,8,2,4,9,7,6};
-		int[] uniqueNumber = {3,6,6,5,6,5,0,0,0};
-		int[] standardNum = {3,6,8,4,2,4,6,8,5};
-		//The multiple lines of code below are to store the results when calling the methods
-		double storeResults = test.findMean(mySampleNumbers);
-		double medianResults = test.findMedian(scrambledNumbers);
-		Integer modeResults = test.findMode(uniqueNumber);
-		double standardDeviationResults = test.standardDeviation(standardNum);
-		double combinationResult = test.findCombinations(12,2);
-		double permutationsResult = test.findPermutations(6,2);
-		double factorialResult = test.factorial(6);
-		//The multiple lines of code below print out the results for the user to see 
-		System.out.println("The average is: " + storeResults + "\nThe median is: " + medianResults + "\nThe mode is: " + modeResults + "\nThe standard Deviation is: " + standardDeviationResults);
-		System.out.println("The combination is: " + combinationResult);
-		System.out.println("The permutation is: " + permutationsResult);
-		System.out.println("The combination is: " + factorialResult);
-		
+		statsLibrary test = new statsLibrary(); 
+		System.out.println("The average is: " + test.findMean(sampleNum));
+		System.out.println("The median is: " + test.findMedian(sampleNum2));
+		System.out.println("The mode is: " + test.findMode(sampleNum));
+		System.out.println("The standard Deviation is: " + test.standardDeviation(sampleNum));
+		System.out.println("The combination using double is: " + test.findCombinations(12,2));
+		System.out.println("The combination using long is: " + test.longCombinations(12,2));
+		System.out.println("The combination using big integer is: " + test.bigCombinations(12,2));
+		System.out.println("The permutation is: " + test.findPermutations(6,2));
+		System.out.println("The permutation using long is: " + test.longPermutations(6,2));
+		System.out.println("The permutation using big integer is: " + test.bigPermutations(6,2));
+		System.out.println("The factorial is: " + test.factorial(8));
+		System.out.println("The factorial using long is: " + test.longFactorial(8));
+		System.out.println("The factorial using big integer is: " + test.bigFactorial(8));
 	}
 }
