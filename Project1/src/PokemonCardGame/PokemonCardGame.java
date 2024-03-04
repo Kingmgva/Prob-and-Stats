@@ -164,26 +164,19 @@ public class PokemonCardGame {
 		}
 	}
 	public void setUpGame() {
-		boolean pokemon = false;
+		int player1ReshuffleCount;
+		int player2ReshuffleCount;
 		System.out.println("Each player will be set up with a deck that has 20 pokemon, 20 trainer, and 20 energy cards that correspond with the pokemon \n");
-		player1.playerSetUp();
-		player2.playerSetUp();
-		while(pokemon) {
-			if(player1.evaluateOpeningHand() == false){
-				player1.reshuffle();
-				player2.drawCard();
-			}
-			if(player2.evaluateOpeningHand() == false){
-				player2.reshuffle();
-				player1.drawCard();
-			}
-			else {
-				pokemon = true;
-			}
+		player1ReshuffleCount = player1.playerSetUp();
+		player2ReshuffleCount = player2.playerSetUp();
+		for(int i =0; i<player1ReshuffleCount; i++) {
+			player2.drawCard();
 		}
-		runGame();
-		//player1.setBoard();
-		//player2.setBoard();
+		for(int i =0; i<player2ReshuffleCount; i++) {
+			player1.drawCard();
+		}
+		player1.setBoard();
+		player2.setBoard();
 		
 		//get card from hand
 		//card.playable();

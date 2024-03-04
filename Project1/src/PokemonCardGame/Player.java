@@ -44,6 +44,9 @@ public class Player{
 		}
 	}
 	public void reshuffle(){
+		for(int i = 0; i<7; i++) {
+			deck.add(hand.get(i));
+		}
 		hand.clear();
 		drawHand();
 	}
@@ -87,9 +90,9 @@ public class Player{
 		for (int i = 0; i < hand.size(); i++) {
 			currentCard = hand.get(i);
 			if (currentCard instanceof Pokemon) {
-				System.out.println("Would you like to add a pokemon to the bench? (Yes or no)");
+				System.out.println("Would you like to add a pokemon to the bench? (yes or no)");
 				userInput = input.next();
-				if(userInput == "yes") {
+				if(userInput.equals("yes")) {
 					System.out.println("Which pokemon would you like to add? (Please indicate number location)" + getHand());
 					chosenPoke = input.nextInt();
 					for (int k = 0; k < hand.size(); k++) {
@@ -100,19 +103,17 @@ public class Player{
 						}
 					}
 				}
-				else if(userInput == "no") {
+				else if(userInput.equals("no")){
 					System.out.println("Okay");
+					break;
 				}
 				else {
 					System.out.println("Invalid input, type yes or no please");
 					userInput = input.next();
 				}
 			}
-			else {
-				System.out.println("Your board is fully set up");
-				break;
-			}
 		}
+		System.out.println("Your board is fully set up");
 	}
 
 	public ArrayList<Card> getDeck(){
@@ -127,9 +128,15 @@ public class Player{
 	public int getPrize() {
 		return prizePool.size();
 	}
-	public void playerSetUp() {
+	public int playerSetUp() {
+		int count =0;
 		constructDeck();
 		drawHand();
+		while(!evaluateOpeningHand()){
+			reshuffle();
+			count++;
+		}
+		return count;
 	}
 	public void attack() {
 		
@@ -145,6 +152,4 @@ public class Player{
 	public void prizeCheck() {
 		
 	}
-	
-//asdasdasd
 }
