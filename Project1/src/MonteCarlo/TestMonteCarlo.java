@@ -1,3 +1,4 @@
+package MonteCarlo;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-
+package PokemonCardGame;
 public class Bulbasaur extends Pokemon implements Attackable{
 	
 	public Bulbasaur() {

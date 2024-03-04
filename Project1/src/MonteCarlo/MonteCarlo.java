@@ -1,6 +1,13 @@
+package MonteCarlo;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import PokemonCardGame.Card;
+import PokemonCardGame.Energy;
+import PokemonCardGame.Pokemon;
+import PokemonCardGame.RareCandy;
+import PokemonCardGame.Trainer;
 
 public class MonteCarlo {
 	private ArrayList<Card> deck; 

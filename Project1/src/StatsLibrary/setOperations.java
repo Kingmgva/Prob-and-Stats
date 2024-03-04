@@ -1,3 +1,4 @@
+package StatsLibrary;
 
 /*
  * pick a data type to work with: Integer/String

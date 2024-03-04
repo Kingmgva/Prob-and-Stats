@@ -1,3 +1,4 @@
+package PokemonCardGame;
 
 public class Pokemon extends Card{
 	
