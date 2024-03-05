@@ -196,6 +196,11 @@ public class Player{
 			System.out.println("Invalid Input");
 			userNumAttack = input.nextInt();
 		}
+		checkStatusOfField();
+	}
+	public void checkStatusOfField() {
+		Pokemon 
+		
 	}
 	public void activeField(Pokemon chosen) {
 		active.add(chosen);
