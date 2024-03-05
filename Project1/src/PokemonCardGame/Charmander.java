@@ -2,6 +2,10 @@ package PokemonCardGame;
 public class Charmander extends Pokemon implements Attackable{
 	public Charmander(){
 		setHp(50);
+		setName("Charmander");
+		pokemonType("Fire");
+		setAttack1("Scratch");
+		setAttack2("Ember");
 	}
 	public void attackOne(Pokemon target) {
 		String attackNameOne = "Scratch";

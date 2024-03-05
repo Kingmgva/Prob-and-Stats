@@ -95,7 +95,7 @@ public class MonteCarlo {
 		for(int j = 0; j < 15; j++ ){
 			deck.add(new Energy());
 		}
-		for(int k = 0; k < 15; k++ ){
+		for(int k = 0; k < 14; k++ ){
 			deck.add(new Pokemon());
 		}
 		for(int h = 0; h < 30-numOfRareCandy; h++) {
@@ -133,7 +133,6 @@ public class MonteCarlo {
 			Card currentCard = prizePool.get(i);
 			if (currentCard instanceof RareCandy){
 				insidePrize++;
-				return true;
 			}
 		}
 		return false;
@@ -141,14 +140,20 @@ public class MonteCarlo {
 	public void resetPrize() {
 		prizePool.clear();
 	}
+	public void drawHand2() {
+		for (int i = 0; i < 6; i++) {// We're counting to 7
+			hand.add(drawCard());
+		}
+		hand.add(new Pokemon());
+	}
 	
 	public void runCharizardMonteCarlo(){
 		for(int i = 1; i < 60; i++) {
 			bricked = 0;
 			notBricked = 0;
-			for(int k = 0; k <10; k++) {
+			for(int k = 0; k <100000; k++) {
 				constructCharDeck(i);
-				drawHand();
+				drawHand2();
 				if(evaluateOpeningHand()){
 					prizePool();
 					insidePrize = 0;

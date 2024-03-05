@@ -3,10 +3,13 @@ import java.util.Random;
 public class Squirtle extends Pokemon implements Attackable{
 	public Squirtle() {
 		setHp(50);
+		setName("Squirtle");
+		pokemonType("Water");
+		setAttack1("Bubble");
+		setAttack2("Water Gun");
 	}
 	public void attackOne(Pokemon target) {
 		String [] coin = {"head", "tail"};
-		String attackNameOne = "Bubble";
 		Random rng = new Random();
 		String coinResult = coin[rng.nextInt(coin.length)];
 		if (coinResult == "head") {
@@ -18,7 +21,6 @@ public class Squirtle extends Pokemon implements Attackable{
 	}
 	@Override
 	public void attackTwo(Pokemon target) {
-		String attackNameTwo = "Water Gun";
 		int currentHp = target.getHp();
 		int resultingHp = currentHp - 20;
 		target.setHp(resultingHp);

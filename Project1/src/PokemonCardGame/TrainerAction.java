@@ -1,6 +1,6 @@
 package PokemonCardGame;
 
 public interface TrainerAction {
-	void playable(PokemonCardGame gameState);
+	void playable(Player gameState);
 	
 }

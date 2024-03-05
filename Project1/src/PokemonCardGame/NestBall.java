@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class NestBall extends Trainer implements TrainerAction{
 	@Override
-	public void playable(PokemonCardGame gameState){
+	public void playable(Player gameState){
 		//find pokemon
 		ArrayList<Card> deck = gameState.getDeck();
 		ArrayList<Card> bench = gameState.getBench();

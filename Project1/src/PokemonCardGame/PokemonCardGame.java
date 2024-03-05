@@ -26,89 +26,6 @@ public class PokemonCardGame {
 		bench = new ArrayList<>();
 	}
 
-	public Card drawCard() {
-		Random rng = new Random();
-		int cardIndex = rng.nextInt(deck.size()); // Find Random card
-		Card drawnCard = deck.get(cardIndex);
-		deck.remove(cardIndex);
-		return drawnCard;
-	}
-
-	public void drawHand() {
-		for (int i = 0; i < 7; i++) {// We're counting to 7
-			hand.add(drawCard());
-		}
-	}
-
-	public boolean evaluateOpeningHand(){
-		boolean havePokemon = false;
-		for (int i = 0; i < hand.size(); i++) {
-			Card currentCard = hand.get(i);
-			if (currentCard instanceof Pokemon) {
-				return true;
-			}
-		}
-		return false;
-	}
-	public void constructDeck(){
-		deck.clear();
-		hand.clear();
-		for(int i = 0; i < 20; i++ ) {
-			deck.add(new Pokemon());
-		}
-		for(int j = 0; j < 20; j++ ){
-			deck.add(new Energy());
-		}
-		for(int k = 0; k < 20; k++) {
-			deck.add(new Trainer());
-		}
-	}
-	public void reDrawHand() {
-		hand.clear();
-		drawHand();
-	}
-	
-	//Make engine for program
-	public void run(){
-		constructDeck();
-		drawHand();
-		while(evaluateOpeningHand() == false){
-				constructDeck();
-				reDrawHand();
-	        }
-		System.out.println("Got a Pokemon");
-		System.out.println(deck);
-		System.out.println(hand);
-	}
-	public void playNestBall() {
-		//find pokemon
-		ArrayList<Card> tempPokemon = new ArrayList<>();
-		boolean done =false;
-		int i = 0;
-		while(i < deck.size()) {
-			if(deck.get(i) instanceof Pokemon) {
-				tempPokemon.add(deck.get(i));
-				deck.remove(i);
-			}
-			else {
-				i++;
-			}
-		}
-		System.out.println("Pokemon found so far: " + tempPokemon);
-		System.out.println("Count: " + tempPokemon.size());
-		
-		Random ranPokemon = new Random();
-		int saveRanPokemon = ranPokemon.nextInt(tempPokemon.size());
-		bench.add(tempPokemon.get(saveRanPokemon));
-		tempPokemon.remove(saveRanPokemon);
-		
-		for(int j = 0; j < tempPokemon.size(); j++) {
-			deck.add(tempPokemon.get(i));
-		}
-	}
-	public void playProfessorsResearch(){
-		
-	}
 	public ArrayList<Card> getDeck(){
 		return deck;
 	}
@@ -167,8 +84,8 @@ public class PokemonCardGame {
 		int player1ReshuffleCount;
 		int player2ReshuffleCount;
 		System.out.println("Each player will be set up with a deck that has 20 pokemon, 20 trainer, and 20 energy cards that correspond with the pokemon \n");
-		player1ReshuffleCount = player1.playerSetUp();
-		player2ReshuffleCount = player2.playerSetUp();
+		player1ReshuffleCount = player1.player1SetUp();
+		player2ReshuffleCount = player2.player2SetUp();
 		for(int i =0; i<player1ReshuffleCount; i++) {
 			player2.drawCard();
 		}
@@ -177,14 +94,16 @@ public class PokemonCardGame {
 		}
 		player1.setBoard();
 		player2.setBoard();
-		
-		//get card from hand
-		//card.playable();
+		runGame();
 	}
 	public void runGame() {
+		System.out.println("Player 1 your board consists of: " );
 		player1.startOfGame();
+		System.out.println("\n\n");
+		System.out.println("Player 2 your board consists of: " );
 		player2.startOfGame();
 		while(player1.getPrize() > 0) {
+			player1.playerTurn();
 			
 		}
 	}
