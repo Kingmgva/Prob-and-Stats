@@ -3,11 +3,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ProfessorsResearch extends Trainer implements TrainerAction{
-	public void playable(PokemonCardGame gameState)
+	public ProfessorsResearch() {
+		setName("Professors Research");
+	}
+	public void playable(Player gameState)
 	{
 		ArrayList<Card> deck = gameState.getDeck();
 		ArrayList<Card> hand = gameState.getHand();
-		hand.removeAll(hand);
+		deck.addAll(hand);
+		hand.clear();
 		while(hand.size() < 7){
 			Random rng = new Random();
 			int cardIndex = rng.nextInt(deck.size());

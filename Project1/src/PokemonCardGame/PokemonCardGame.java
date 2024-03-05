@@ -24,16 +24,8 @@ public class PokemonCardGame {
 		deck = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
 		bench = new ArrayList<>();
-	}
-
-	public ArrayList<Card> getDeck(){
-		return deck;
-	}
-	public ArrayList<Card> getBench(){
-		return bench;
-	}
-	public ArrayList<Card> getHand(){
-		return hand;
+		player1.setName("Player1");
+		player2.setName("Player2");
 	}
 	public void instructions() {
 		System.out.println("Would you like to see the instructions on how to play the game?");
@@ -97,15 +89,18 @@ public class PokemonCardGame {
 		runGame();
 	}
 	public void runGame() {
-		System.out.println("Player 1 your board consists of: " );
+		boolean win = false;
+		System.out.println(player1.getName() + " your board consists of: " );
 		player1.startOfGame();
 		System.out.println("\n\n");
-		System.out.println("Player 2 your board consists of: " );
+		System.out.println(player2.getName() + " your board consists of: " );
 		player2.startOfGame();
-		while(player1.getPrize() > 0) {
-			player1.playerTurn();
-			
-		}
+		System.out.println("\n\n");
+		player1.playerTurn();
+		player1.attack(player2);
+		player2.playerTurn();
+		player2.attack(player1);
+
 	}
 }
 

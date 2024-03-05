@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Player{
+	private String playerName;
 	private ArrayList<Card> deck; 
 	private ArrayList<Card> hand;
 	private ArrayList<Card> prizePool;
@@ -19,6 +20,12 @@ public class Player{
 		discard = new ArrayList<Card>();
 		bench = new ArrayList<Card>();
 		active = new ArrayList<Card>();
+	}
+	public void setName(String name) {
+		playerName = name;
+	}
+	public String getName() {
+		return playerName;
 	}
 	public void constructDeck1(){
 		for(int i = 0; i < 10; i++ ) {
@@ -108,7 +115,7 @@ public class Player{
 	
 	
 	public void startOfGame() {
-		System.out.printf("Hand: '%s'\nDeck: '%d'\nPrize cards: '%S'\nActive Pokemon: '%d'\nBench:  '%s'", printHand(), printDeck(), prizePool.size(), printActive(), printBench());
+		System.out.printf("Hand: '%s'\nDeck: '%d'\nPrize cards: '%d'\nActive Pokemon: '%s'\nBench:  '%s'", printHand(), printDeck(), prizePool.size(), printActive(), printBench());
 	}
 	public ArrayList<String> printHand() {
 		ArrayList<String> handNames = new ArrayList<String>();
@@ -143,6 +150,15 @@ public class Player{
 	public ArrayList<Card> getHand(){
 		return hand;
 	}
+	public ArrayList<Card> getDiscard(){
+		return discard;
+	}
+	public ArrayList<Card> getPrizePool(){
+		return prizePool;
+	}
+	public ArrayList<Card> getActive(){
+		return active;
+	}
 	
 	
 	
@@ -174,32 +190,44 @@ public class Player{
 		return count;
 	}
 	public void attack(Player target) {
-		int userNumAttack;
-		Pokemon attacker = (Pokemon) active.get(0);
-		Pokemon opponent = (Pokemon) target.active.get(0);
-		
-		System.out.println("Pick an attack through the number:/n 1: " + attacker.getAttack1() +"\n 2: " + attacker.getAttack2() + "/n 3:No attack");
-		userNumAttack = input.nextInt();
-		switch(userNumAttack) {
-		case 1:
-			System.out.println(attacker.getName() + " has used " + attacker.getAttack1());
-			attacker.attackOne(opponent);
-			break;
-		case 2:
-			System.out.println(attacker.getName() + " has used " + attacker.getAttack2());
-			attacker.attackTwo(opponent);
-			break;
-		case 3:
-			System.out.println("No attack");
-			break;
-		default:
-			System.out.println("Invalid Input");
+		String attackInput;
+		System.out.println("Would you like to attack? (yes or no)");
+		attackInput = input.next();
+		switch(attackInput) {
+		case "yes":
+			int userNumAttack;
+			Pokemon attacker = (Pokemon) active.get(0);
+			Pokemon opponent = (Pokemon) target.active.get(0);
+			
+			System.out.println("Pick an attack through the number:\n 1: " + attacker.getAttack1() +"\n 2: " + attacker.getAttack2() + "\n 3: No attack");
 			userNumAttack = input.nextInt();
+			switch(userNumAttack) {
+			case 1:
+				System.out.println(attacker.getName() + " has used " + attacker.getAttack1() + " to attack " + opponent.getName());
+				attacker.attackOne(opponent);
+				System.out.println(target.getName() + " pokemon was attacked and now has " + opponent.getHp());
+				break;
+			case 2:
+				System.out.println(attacker.getName() + " has used " + attacker.getAttack2() + " to attack " + opponent.getName());
+				attacker.attackTwo(opponent);
+				System.out.println(target.getName() + " pokemon was attacked and now has " + opponent.getHp());
+				break;
+			case 3:
+				System.out.println("No attack");
+				break;
+			default:
+				System.out.println("Invalid Input");
+				userNumAttack = input.nextInt();
+			}
+			checkStatusOfField();
+			break;
+		case "no":
+			System.out.println("Okay, your turn ends here");
+			break;
 		}
-		checkStatusOfField();
 	}
 	public void checkStatusOfField() {
-		Pokemon 
+		//Pokemon 
 		
 	}
 	public void activeField(Pokemon chosen) {
@@ -209,6 +237,9 @@ public class Player{
 	public void benchField(Pokemon chosen) {
 		bench.add(chosen);
 		hand.remove(chosen);
+	}
+	public void setActive() {
+		System.out.println("Pick a pokemon to put as your active: " + printHand());
 	}
 	public void addBench() {
 		int userInput;
@@ -241,6 +272,36 @@ public class Player{
 			}
 		}
 		System.out.println("No energy card to attach to Pokemon");
+	}
+	public void retreat() {
+		String userInput;
+		System.out.println("Are you sure you want to retreat your pokemon? (yes or no)");
+		userInput = input.next();
+		if(userInput.equals("yes")) {
+			bench.add(active.get(0));
+		}
+		else {
+			System.out.println("Understood, we go back to your options.");
+		}
+	}
+	public void playTrainer(){
+		Trainer currentTrainer = new Trainer();
+		Card currentCard = new Card();
+		int userPick;
+		System.out.println("Which trainer would you like to play:\n " + printHand());
+		userPick = input.nextInt();
+		currentCard = hand.get(userPick-1);
+		if(currentCard instanceof Trainer) {
+			currentTrainer = (Trainer) currentCard;
+			currentTrainer.playable(this);
+		}
+		else {
+			System.out.println("not a trainer card, pick a trainer card");
+			userPick = input.nextInt();
+			
+		}
+		
+		
 	}
 	
 	
@@ -288,11 +349,12 @@ public class Player{
 		}
 		System.out.println("Your board is fully set up");
 	}
-	public void playerTurn() {
+	public void playerTurn(){
 		int userInput;
+		String attackInput;
 		drawCard();
 		printHand();
-		System.out.println("Before you attack, you can:\n 1: Attach energy to pokemon \n 2:Add to bench \n 3.play trainer card \n 4: retreat active pokemon \n 5:Attack");
+		System.out.println("Before you attack, you can:\n 1:Attach energy to pokemon \n 2:Add to bench \n 3.play trainer card \n 4:retreat active pokemon \n 5:Go to attack");
 		userInput = input.nextInt();
 		while(userInput != 5) {
 			switch(userInput){
@@ -303,11 +365,12 @@ public class Player{
 					addBench();
 					break;
 				case 3:
+					playTrainer();
 					break;
 				case 4:
+					retreat();
 					break;
 			}
 		}
-		attack();
 	}
 }

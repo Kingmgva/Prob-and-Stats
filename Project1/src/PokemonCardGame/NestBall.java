@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class NestBall extends Trainer implements TrainerAction{
-	@Override
+	public NestBall() {
+		setName("Nest Ball");
+	}
 	public void playable(Player gameState){
 		//find pokemon
 		ArrayList<Card> deck = gameState.getDeck();
