@@ -275,13 +275,23 @@ public class Player{
 	}
 	public void retreat() {
 		String userInput;
-		System.out.println("Are you sure you want to retreat your pokemon? (yes or no)");
-		userInput = input.next();
-		if(userInput.equals("yes")) {
-			bench.add(active.get(0));
-		}
-		else {
-			System.out.println("Understood, we go back to your options.");
+		Card currentCard = new Card();
+		for(int i=0; i<hand.size(); i++) {
+			currentCard = hand.get(i);
+			if(bench.size()>0 && currentCard instanceof Pokemon) {
+				System.out.println("Are you sure you want to retreat your pokemon? (yes or no)");
+				userInput = input.next();
+				if(userInput.equals("yes")) {
+					bench.add(active.get(0));
+					System.out.println("Who would you like to put as your active pokemon? : " + printHand());
+				}
+				else {
+					System.out.println("Understood, we go back to your options.");
+				}
+			}
+			else {
+				System.out.println("Can't retreat since you don't have a pokemon in bench or on hand");
+			}
 		}
 	}
 	public void playTrainer(){

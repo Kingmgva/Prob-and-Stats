@@ -212,9 +212,11 @@ public class statsLibrary {
 			return "dependent";
 		}
 	}
-	public double multiplicativeLaw(double probA, double probB, double probAB, boolean dependency) {
+	public double multiplicativeLaw(double probA, double probB, double probAB){
+		String dependency;
+		dependency = independent(probA, probB, probAB);
 		double probAinterB;
-		if(dependency) {
+		if(dependency == "independent") {
 			probAinterB = probA*conditionalProb(probB,probA,probAB);
 			return probAinterB;
 		}
@@ -249,11 +251,11 @@ public class statsLibrary {
 		double finalRes = binomialResult.doubleValue()*Math.pow(success, yGoal)*Math.pow(fail,nTrials-yGoal);
 		return finalRes;
 	}
-	public double expectedBinomial(int nTrials, int success) {
+	public double expectedBinomial(int nTrials, double success) {
 		double mean = nTrials*success;
 		return mean;
 	}
-	public double varianceBinomial(int nTrials, int success) {
+	public double varianceBinomial(int nTrials, double success) {
 		double variance = nTrials*success*(1-success);
 		return variance;
 	}
@@ -272,7 +274,7 @@ public class statsLibrary {
 	}
 	public double hyperGeometricDist(int N, int n, int r, int y) {
 		BigInteger numerator1 = bigCombinations(r,y);
-		BigInteger numerator2 = bigCombinations(N-r,N-y);
+		BigInteger numerator2 = bigCombinations(N-r,n-y);
 		BigInteger denominator = bigCombinations(N,n);
 		double finalResult = (numerator1.doubleValue()*numerator2.doubleValue())/denominator.doubleValue();
 		return finalResult;
@@ -282,6 +284,19 @@ public class statsLibrary {
 	}
 	public double getVarHGD(int N, int n, int r) {
 		return n*(r/(double)n)*((N-r)/(double)N)*((N-n)/(double)N-1);
+	}
+	public double negativeBinomialDistribution(int y, int r, double p) {
+		double qFail = 1-p;
+		BigInteger result = bigCombinations(y-1,r-1);
+		double finalResult = result.doubleValue()*Math.pow(p, r)*Math.pow(qFail, y-r);
+		return finalResult;
+		
+	}
+	public double getExpectedNBD(int y, int r, double p) {
+		return r/(double) p;
+	}
+	public double getVarNBD(int y, int r, double p) {
+		return (r*(1-p)/Math.pow(p,2));
 	}
 	public void testCases() {
 		statsLibrary test = new statsLibrary(); 
@@ -298,5 +313,30 @@ public class statsLibrary {
 		System.out.println("The factorial is: " + test.factorial(8));
 		System.out.println("The factorial using long is: " + test.longFactorial(8));
 		System.out.println("The factorial using big integer is: " + test.bigFactorial(8));
+		
+		System.out.println("The conditional probability: " + test.conditionalProb(8,5,5));
+		System.out.println("The independency is: " + test.independent(8,5,5));
+		System.out.println("The multiplicative law is: " + test.multiplicativeLaw(8,5,5));
+		System.out.println("The additive law is: " + test.additiveLaw(8,5,5,true));
+		System.out.println("The total Probability is: " + test.totalProb(8,5,5));
+		System.out.println("The bayes rule is: " + test.bayesRule(8,5,5,5));
+		
+		System.out.println("The binomial distribution is: " + test.binomialDist(5,3,.75));
+		System.out.println("The expected binomial distribution: " + test.expectedBinomial(5,.75));
+		System.out.println("The variance for binomial distribution is: " + test.varianceBinomial(5,.75));
+		
+		System.out.println("The geometric distribution is: " + test.geometricDist(4,.5));
+		System.out.println("The expected geometric distribution: " + test.expectedGeometric(4,.5));
+		System.out.println("The variance for geometric distribution is: " + test.varGeometric(4,.5));
+		
+		System.out.println("The hypergeometric distribution is: " + test.hyperGeometricDist(10,5,6,4));
+		System.out.println("The expected hypergeomtric distribution: " + test.getExpectedHGD(5,6,10));
+		System.out.println("The variance for hypergeometric distribution is: " + test.getVarHGD(10,5,6));
+		
+		System.out.println("The negative binomial distribution is: " + test.negativeBinomialDistribution(5,3,.2));
+		System.out.println("The expected negative binomial distribution: " + test.getExpectedNBD(5,3,.2));
+		System.out.println("The variance for negative binomial distribution is: " + test.getVarNBD(5,3,.2));
+		
+		
 	}
 }
