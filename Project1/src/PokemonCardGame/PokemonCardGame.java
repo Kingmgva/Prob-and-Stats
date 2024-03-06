@@ -89,17 +89,16 @@ public class PokemonCardGame {
 		runGame();
 	}
 	public void runGame() {
-		boolean win = false;
+		boolean winner = false;
 		System.out.println(player1.getName() + " your board consists of: " );
 		player1.startOfGame();
 		System.out.println("\n\n");
 		System.out.println(player2.getName() + " your board consists of: " );
 		player2.startOfGame();
 		System.out.println("\n\n");
-		player1.playerTurn();
-		player1.attack(player2);
-		player2.playerTurn();
-		player2.attack(player1);
+		while(winner = false)
+			player1.playerTurn(player2);
+			player2.playerTurn(player1);
 
 	}
 }

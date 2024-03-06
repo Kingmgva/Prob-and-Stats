@@ -98,6 +98,13 @@ public class Player{
 			prizePool.add(drawCard());
 		}
 	}
+	public void drawPrizeCard() {
+		Random rng = new Random();
+		int cardIndex = rng.nextInt(prizePool.size()); // Find Random card
+		Card drawnCard = prizePool.get(cardIndex);
+		prizePool.remove(cardIndex);
+		hand.add(drawnCard);
+	}
 	
 	
 	
@@ -206,11 +213,13 @@ public class Player{
 				System.out.println(attacker.getName() + " has used " + attacker.getAttack1() + " to attack " + opponent.getName());
 				attacker.attackOne(opponent);
 				System.out.println(target.getName() + " pokemon was attacked and now has " + opponent.getHp());
+				checkActiveField(target);
 				break;
 			case 2:
 				System.out.println(attacker.getName() + " has used " + attacker.getAttack2() + " to attack " + opponent.getName());
 				attacker.attackTwo(opponent);
 				System.out.println(target.getName() + " pokemon was attacked and now has " + opponent.getHp());
+				checkActiveField(target);
 				break;
 			case 3:
 				System.out.println("No attack");
@@ -219,15 +228,43 @@ public class Player{
 				System.out.println("Invalid Input");
 				userNumAttack = input.nextInt();
 			}
-			checkStatusOfField();
 			break;
 		case "no":
 			System.out.println("Okay, your turn ends here");
 			break;
 		}
+		checkWinner();
 	}
-	public void checkStatusOfField() {
-		//Pokemon 
+	public void checkActiveField(Player target) {
+		Pokemon opponent = (Pokemon) target.active.get(0);
+		if(opponent.getHp()<=0) {
+			this.drawPrizeCard();
+			target.discardField(opponent);
+			target.addToActive();
+		}
+		
+	}
+	public void discardField(Pokemon target){
+		active.remove(target);
+	}
+	public void addToActive(){
+		int userPick;
+		Card currentCard = new Card();
+		Pokemon chosenPoke = new Pokemon();
+		System.out.println("Add an active from your bench:\n " + printBench());
+		userPick = input.nextInt();
+		currentCard = bench.get(userPick-1);
+		if(currentCard instanceof Pokemon) {
+			chosenPoke = (Pokemon) currentCard;
+			active.add(chosenPoke);
+			bench.remove(userPick-1);
+		}
+		else {
+			System.out.println("No pokemon was selected, please select a Pokemon: ");
+			userPick = input.nextInt();
+		}
+		
+		
 		
 	}
 	public void activeField(Pokemon chosen) {
@@ -256,6 +293,7 @@ public class Player{
 			}
 		}
 		System.out.println("Don't have any pokemon in hand to add to bench");
+		
 	}
 	public void attachEnergy() {
 		int userInput;
@@ -268,22 +306,48 @@ public class Player{
 				userInput = input.nextInt();
 				currentCard = hand.get(userInput-1);
 				Energy chosenEnergy = (Energy)currentCard;
-				active.add(chosenEnergy);
 			}
 		}
 		System.out.println("No energy card to attach to Pokemon");
 	}
 	public void retreat() {
 		String userInput;
+		int userPick;
 		Card currentCard = new Card();
+		Pokemon chosenPoke = new Pokemon();
 		for(int i=0; i<hand.size(); i++) {
 			currentCard = hand.get(i);
-			if(bench.size()>0 && currentCard instanceof Pokemon) {
+			if(bench.size()>0 || currentCard instanceof Pokemon) {
 				System.out.println("Are you sure you want to retreat your pokemon? (yes or no)");
 				userInput = input.next();
 				if(userInput.equals("yes")) {
-					bench.add(active.get(0));
-					System.out.println("Who would you like to put as your active pokemon? : " + printHand());
+					if(bench.size()==5) {
+						System.out.println("can't retreat since bench is full");
+					}
+					else {
+						bench.add(active.get(0));
+						System.out.println("Would you like to put from bench or deck? (deck or bench)");
+						userInput = input.next();
+						if(userInput == "deck") {
+							System.out.println("pick a card: "+ printHand());
+							userPick = input.nextInt();
+							currentCard = hand.get(userPick -1);
+							chosenPoke = (Pokemon) currentCard;
+							activeField(chosenPoke);
+						}
+						else if(userInput == "bench") {
+							System.out.println("pick a card: "+ printBench());
+							userPick = input.nextInt();
+							currentCard = bench.get(userPick -1);
+							chosenPoke = (Pokemon) currentCard;
+							active.add(chosenPoke);
+							bench.remove(userPick-1);
+						}
+						else {
+							System.out.println("invalid input");
+							userInput = input.next();
+						}		
+					}	
 				}
 				else {
 					System.out.println("Understood, we go back to your options.");
@@ -308,13 +372,27 @@ public class Player{
 		else {
 			System.out.println("not a trainer card, pick a trainer card");
 			userPick = input.nextInt();
-			
 		}
-		
-		
 	}
-	
-	
+	public boolean checkWinner(){
+		boolean winner = false;
+		if(prizePool.size() == 0) {
+			System.out.println(this.getName() + " has won the game");
+			return winner = true;
+		}
+		else if(active.size() == 0 && bench.size()==0) {
+			System.out.println(this.getName() + " has won the game");
+			return winner = true;
+		}
+		else if(deck.size()==0) {
+			System.out.println(this.getName() + " has won the game");
+			return winner = true;
+		}
+		else {
+			System.out.println("No winner yet");
+			return winner;
+		}
+	}
 	
 	
 	
@@ -359,7 +437,7 @@ public class Player{
 		}
 		System.out.println("Your board is fully set up");
 	}
-	public void playerTurn(){
+	public void playerTurn(Player opponent){
 		int userInput;
 		String attackInput;
 		drawCard();
@@ -382,5 +460,6 @@ public class Player{
 					break;
 			}
 		}
+		attack(opponent);
 	}
 }

@@ -8,6 +8,7 @@ public class ProfessorsResearch extends Trainer implements TrainerAction{
 	}
 	public void playable(Player gameState)
 	{
+		ArrayList<String> newHand = new ArrayList<String>();
 		ArrayList<Card> deck = gameState.getDeck();
 		ArrayList<Card> hand = gameState.getHand();
 		deck.addAll(hand);
@@ -20,7 +21,11 @@ public class ProfessorsResearch extends Trainer implements TrainerAction{
 			for (int i = 0; i < 7; i++) {
 				hand.add(drawnCard);
 			}
+			for(int j = 0; j < 7; j++) {
+				newHand.add(hand.get(j).getName());
+			}
 		}
+		System.out.println(newHand);
 	}
 }
 	

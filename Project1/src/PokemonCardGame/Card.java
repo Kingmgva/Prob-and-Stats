@@ -6,5 +6,7 @@ public class Card{
 	public String getName() {
 		return name;
 	}
-
+	public void attachEnergy() {
+		
+	}
 }
