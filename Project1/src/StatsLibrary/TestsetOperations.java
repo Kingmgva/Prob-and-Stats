@@ -1,5 +1,9 @@
+/**
+ * This class is used to test the set operations class
+ * 
+ * @author Melvin Vazquez
+ */
 package StatsLibrary;
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +12,10 @@ import org.junit.Test;
 public class TestsetOperations {
 
 	@Test
+	/**
+	 * This class creates the tester, initializes arrays to input into methods and calls each method in setOperations with correct array inside each method.
+	 * @param args
+	 */
 	public static void main(String[]args) {
 		setOperations test = new setOperations();
 		String [] weekdays = {"Monday", "Tuesday","Wednesday","Thursday","Friday"};

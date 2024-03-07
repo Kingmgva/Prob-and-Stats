@@ -1,3 +1,8 @@
+/**
+ * This class calls the set operations used in stats and returns the union, intersection, and complement of a list
+@author - Melvin Vazquez
+ */
+
 package StatsLibrary;
 
 /*
@@ -15,13 +20,15 @@ import java.util.ArrayList;
 
 public class setOperations {
 	public setOperations() {
-
 	}
 
 	public setOperations(ArrayList<String> userInput) {
-
 	}
-	
+	/**
+	 * Gets the users ArrayList and adds all to one list, then it goes through the list and checks if there are duplicates and removes them. After they are removed it will print out the combined list for user
+	 * @param userList1 - the first list inputed, we used days of the week in the creation of all lists 
+	 * @param userList2 - second list inputed, used days of the week in the creation of all lists
+	 */
 	public void setUnion(ArrayList<String> userList1, ArrayList<String> userList2) {
 		ArrayList<String> unionList = new ArrayList<String>();
 		unionList.addAll(userList1);
@@ -35,9 +42,12 @@ public class setOperations {
 		}
 		System.out.println(unionList);
 	}
-	
-	
-	
+	/**
+	 * This method checks both lists to see which values are in both list 1 and list 2, then adds it to one list and returns that list
+	 * @param userList1 - days of the week, with some matching the days of the week of list 2
+	 * @param userList2 - days of the week, with some matching the days of the week of list 1
+	 * @return intersectionList - the list of same values present in list 1 and 2
+	 */
 	public ArrayList<String> setIntersection(ArrayList<String> userList1, ArrayList<String> userList2){
 		ArrayList<String> intersectionList = new ArrayList<String>();
 		for (int i = 0; i < userList1.size(); i++) {
@@ -49,8 +59,12 @@ public class setOperations {
 		}
 		return intersectionList;
 	}
-	
-	
+	/**
+	 * This method grabs the list with all elements and the subset of that list and compares them with each other. It checks whether a value from userlist is in subset and if not then it is added into the complement list.
+	 * @param userList - all days of the week 
+	 * @param subSet - some days of the week
+	 * @return complementList - the values in userList that are not present in subSet
+	 */
 	public ArrayList <String> complement(ArrayList<String> userList, ArrayList<String> subSet) {
 		ArrayList<String> complementList = new ArrayList<String>();
 		for (String element: userList) {

@@ -1,5 +1,5 @@
-/*
- * Class used to recognize rare candy so that the charizard Monte Carlo works 
+/**
+ * Class only used to recognize rare candy so that the charizard Monte Carlo works 
  * 
  * @Author - Melvin Vazquez
  */
