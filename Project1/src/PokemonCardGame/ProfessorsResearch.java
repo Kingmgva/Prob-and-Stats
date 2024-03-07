@@ -18,12 +18,10 @@ public class ProfessorsResearch extends Trainer implements TrainerAction{
 			int cardIndex = rng.nextInt(deck.size());
 			Card drawnCard = deck.get(cardIndex);
 			deck.remove(cardIndex);
-			for (int i = 0; i < 7; i++) {
-				hand.add(drawnCard);
-			}
-			for(int j = 0; j < 7; j++) {
-				newHand.add(hand.get(j).getName());
-			}
+			hand.add(drawnCard);
+		}
+		for(int j = 0; j < 7; j++) {
+			newHand.add(hand.get(j).getName());
 		}
 		System.out.println(newHand);
 	}

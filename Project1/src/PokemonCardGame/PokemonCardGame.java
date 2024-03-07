@@ -1,4 +1,4 @@
-/*
+/**
  * This class is where the bulk of the pokemon card game is created and is the main engine that sets up the game and runs the game.
  * 
  * @author Melvin Vazquez
@@ -9,21 +9,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class PokemonCardGame {
-	//initializes a private array list deck which is used in constructing a deck filled with energy, trainer, and pokemon cards
-	private ArrayList<Card> deck;
-	//initializes a private array list hand, which is used to draw from deck and add to hand for the user to use in game
-	private ArrayList<Card> hand;
-	//initializes a private array list bench, which is for the user to pick up to 5 basic pokemons to put face down
-	private ArrayList<Card> bench;
 	Player player1 = new Player();
 	Player player2 = new Player();
-	private int deckSize = 60;
 	Scanner input = new Scanner(System.in);
 	
 	public PokemonCardGame(){
-		deck = new ArrayList<Card>();
-		hand = new ArrayList<Card>();
-		bench = new ArrayList<>();
 		player1.setName("Player1");
 		player2.setName("Player2");
 	}
@@ -78,11 +68,11 @@ public class PokemonCardGame {
 		System.out.println("Each player will be set up with a deck that has 20 pokemon, 20 trainer, and 20 energy cards that correspond with the pokemon \n");
 		player1ReshuffleCount = player1.player1SetUp();
 		player2ReshuffleCount = player2.player2SetUp();
-		for(int i =0; i<player1ReshuffleCount; i++) {
-			player2.drawCard();
+		for(int i =0; i<player1ReshuffleCount-player2ReshuffleCount; i++) {
+			player2.drawExtraCard();
 		}
-		for(int i =0; i<player2ReshuffleCount; i++) {
-			player1.drawCard();
+		for(int i =0; i<player2ReshuffleCount-player1ReshuffleCount; i++) {
+			player1.drawExtraCard();
 		}
 		player1.setBoard();
 		player2.setBoard();
@@ -96,9 +86,12 @@ public class PokemonCardGame {
 		System.out.println(player2.getName() + " your board consists of: " );
 		player2.startOfGame();
 		System.out.println("\n\n");
-		while(winner = false)
+		while(winner == false) {
 			player1.playerTurn(player2);
+			player1.checkWinner(player2);
 			player2.playerTurn(player1);
+			player2.checkWinner(player1);
+		}
 
 	}
 }

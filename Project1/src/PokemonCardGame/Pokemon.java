@@ -7,8 +7,8 @@ public class Pokemon extends Card{
 	private String type;
 	private String attack1;
 	private String attack2;
-	private int attachEnergy;
-	private int matchingEnergy;
+	protected int attachEnergy;
+	protected int matchingEnergy;
 	
 	public String getName() {
 		return name;
@@ -31,11 +31,11 @@ public class Pokemon extends Card{
 			matchingEnergy++;
 		}
 	}
-	public void attackOne(Pokemon target) {
-		
+	public boolean attackOne(Pokemon target) {
+		return false;
 	}
-	public void attackTwo(Pokemon target) {
-		
+	public boolean attackTwo(Pokemon target) {
+		return false;
 	}
 	public void setAttack1(String name){
 		attack1 = name;
@@ -48,6 +48,12 @@ public class Pokemon extends Card{
 	}
 	public String getAttack2() {
 		return attack2;
+	}
+	public int getMatchingEnergy() {
+		return matchingEnergy;
+	}
+	public int getAttachedEnergy() {
+		return matchingEnergy;
 	}
 
 }

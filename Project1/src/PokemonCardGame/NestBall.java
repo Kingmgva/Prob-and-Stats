@@ -12,25 +12,21 @@ public class NestBall extends Trainer implements TrainerAction{
 		ArrayList<Card> bench = gameState.getBench();
 		ArrayList<Card> tempPokemon = new ArrayList<>();
 		boolean done = false;
+		int pokeAdded=0;
 		int i = 0;
 		while (i < deck.size()) {
-			if (deck.get(i) instanceof Pokemon) {
-				tempPokemon.add(deck.get(i));
+			if (deck.get(i) instanceof Pokemon && bench.size() < 5) {
+				bench.add(deck.get(i));
 				deck.remove(i);
-			} else {
+				pokeAdded++;
+				i = deck.size();
+			} 
+			else {
 				i++;
 			}
 		}
-		System.out.println("Pokemon found so far: " + tempPokemon);
-		System.out.println("Count: " + tempPokemon.size());
-
-		Random ranPokemon = new Random();
-		int saveRanPokemon = ranPokemon.nextInt(tempPokemon.size());
-		bench.add(tempPokemon.get(saveRanPokemon));
-		tempPokemon.remove(saveRanPokemon);
-
-		for (int j = 0; j < tempPokemon.size(); j++) {
-			deck.add(tempPokemon.get(i));
+		if(pokeAdded == 0) {
+			System.out.println("no pokemon found or bench is full");
 		}
-	};
+	}
 }

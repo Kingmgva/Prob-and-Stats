@@ -18,7 +18,7 @@ public class MistyDetermination extends Trainer implements TrainerAction {
 		ArrayList<Card> discard = gameState.getDiscard();
 		
 		Card currentCard = new Card();
-		System.out.println("Pick a card to get rid of (pick number location): \n" + player.printHand());
+		System.out.println("Pick a card to get rid of (pick number location): \n" + hand);
 		userPick = input.nextInt();
 		currentCard = hand.get(userPick -1);
 		discard.add(currentCard);
