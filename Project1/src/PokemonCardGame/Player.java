@@ -463,6 +463,7 @@ public class Player{
 				while(wantRetreat) {
 					System.out.println("pick a card to put as active pokemon: "+ printBench());
 					bench.add(active.get(0));
+					active.remove(0);
 					userPick = input.nextInt();
 					currentCard = bench.get(userPick -1);
 					if(currentCard instanceof Pokemon) {
@@ -525,15 +526,15 @@ public class Player{
 	public boolean checkWinner(Player target){
 		boolean winner = false;
 		if(prizePool.size() == 0) {
-			System.out.println(this.getName() + " has won the game");
+			System.out.println(this.getName() + " has won the game by collecting all prize cards");
 			return winner = true;
 		}
 		else if(target.active.size() == 0 && target.bench.size()==0) {
-			System.out.println(this.getName() + " has won the game");
+			System.out.println(this.getName() + " has won the game because " + target.getName() + " has no pokemons on bench");
 			return winner = true;
 		}
 		else if(target.deck.size()==0) {
-			System.out.println(this.getName() + " has won the game");
+			System.out.println(this.getName() + " has won the game since opponent ran out of cards");
 			return winner = true;
 		}
 		else {

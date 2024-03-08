@@ -105,6 +105,9 @@ public class PokemonCardGame {
 			player1.checkWinner(player2);
 			player2.playerTurn(player1);
 			player2.checkWinner(player1);
+			if(player1.checkWinner(player2) == true || player2.checkWinner(player1) == true) {
+				winner = true;
+			}
 		}
 
 	}
