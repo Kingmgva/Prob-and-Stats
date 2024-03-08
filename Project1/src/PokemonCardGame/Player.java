@@ -337,10 +337,10 @@ public class Player{
 		if(opponent.getHp()<=0) {
 			this.drawPrizeCard();
 			target.discardField(opponent);
+			if(target.bench.size()>0){
+				target.addToActive();
+			}	
 		}
-		if(target.bench.size()>0){
-			target.addToActive();
-		}	
 	}
 	/**
 	 * This method removes the knocked out pokemon from the active field and adds to the discard pile

@@ -34,11 +34,18 @@ public class MistyDetermination extends Trainer implements TrainerAction {
 		ArrayList<Card> top8Cards = new ArrayList<Card>();
 		ArrayList<Card> hand = gameState.getHand();
 		ArrayList<Card> discard = gameState.getDiscard();
+		ArrayList<String> handName= new ArrayList<String>();
+		/**
+		 * Makes the ArrayList have names that make sense for reader to read
+		 */
+		for(int i = 0; i < hand.size(); i++) {
+			handName.add(hand.get(i).getName());
+		}
 		/**
 		 * This part of the code gets rid of one card from hand and adds to discard pile
 		 */
 		Card currentCard = new Card();
-		System.out.println("Pick a card to get rid of (pick number location): \n" + hand);
+		System.out.println("Pick a card to get rid of (pick number location): \n" + handName);
 		userPick = input.nextInt();
 		currentCard = hand.get(userPick -1);
 		discard.add(currentCard);
@@ -69,6 +76,7 @@ public class MistyDetermination extends Trainer implements TrainerAction {
 		hand.add(currentCard);
 		deck.addAll(top8Cards);
 		top8Cards.clear();
-		System.out.println(hand);
+		handName.add(currentCard.getName());
+		System.out.println(handName);
 	}
 }
