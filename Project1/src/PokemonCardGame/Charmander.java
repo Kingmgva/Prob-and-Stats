@@ -1,6 +1,16 @@
+/**
+ * This class is for one of the pokemon created called Charmander and it is connected to the pokemon game because it extends pokemon and also implements the interface Attackable. This class uses the methods from attackable to create the pokemons attack
+ * @author Melvin Vazquez
+ */
 package PokemonCardGame;
 public class Charmander extends Pokemon implements Attackable{
+	/**
+	 * creates a private boolean to check whether the attack was a success or not
+	 */
 	private boolean attackSuccess;
+	/**
+	 * This method sets the default variables for the pokemon like hp, name, type, and attack names
+	 */
 	public Charmander(){
 		setHp(50);
 		setName("Charmander");
@@ -8,6 +18,11 @@ public class Charmander extends Pokemon implements Attackable{
 		setAttack1("Scratch");
 		setAttack2("Ember");
 	}
+	/**
+	 * This method is creating what results after attack is used and how the target pokemon loses health because of the attack
+	 * @param target - takes in the pokemon being attacked 
+	 * @return attackSuccess - this returns whether the attack went through or not depending on whether the pokemon has the required energy attached to it
+	 */
 	public boolean attackOne(Pokemon target) {
 		if(this.attachEnergy >= 1) {
 			String attackNameOne = "Scratch";
@@ -21,6 +36,11 @@ public class Charmander extends Pokemon implements Attackable{
 			return attackSuccess = false;
 		}
 	}
+	/**
+	 * This method is creating what results after attack is used and how the target pokemon loses health because of the attack
+	 * @param target - takes in the pokemon being attacked 
+	 * @return attackSuccess - this returns whether the attack went through or not depending on whether the pokemon has the required energy attached to it
+	 */
 	public boolean attackTwo(Pokemon target) {
 		if(this.attachEnergy >= 2 && this.matchingEnergy >=1) {
 			int currentHp = target.getHp();

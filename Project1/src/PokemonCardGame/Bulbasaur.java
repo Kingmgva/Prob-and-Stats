@@ -1,6 +1,16 @@
+/**
+ * This class is for one of the pokemon created called Bulbasaur and it is connected to the pokemon game because it extends pokemon and also implements the interface Attackable. This class uses the methods from attackable to create the pokemons attack
+ * @author Melvin Vazquez
+ */
 package PokemonCardGame;
 public class Bulbasaur extends Pokemon implements Attackable{
+	/**
+	 * creates a private boolean to check whether the attack was a success or not
+	 */
 	private boolean attackSuccess = false;
+	/**
+	 * This method sets the default variables for the pokemon like hp, name, type, and attack names
+	 */
 	public Bulbasaur() {
 		setHp(70);
 		setName("Bulbasaur");
@@ -8,7 +18,11 @@ public class Bulbasaur extends Pokemon implements Attackable{
 		setAttack1("Leech Seed");
 		setAttack2("Razor Leaf");
 	}
-	@Override
+	/**
+	 * This method is creating what results after attack is used and how the target pokemon loses health because of the attack
+	 * @param target - takes in the pokemon being attacked 
+	 * @return attackSuccess - this returns whether the attack went through or not depending on whether the pokemon has the required energy attached to it
+	 */
 	public boolean attackOne(Pokemon target) {
 		if(this.matchingEnergy >= 2) {
 			int currentHp = target.getHp();
@@ -30,7 +44,11 @@ public class Bulbasaur extends Pokemon implements Attackable{
 		}
 		
 	}
-	@Override
+	/**
+	 * This method is creating what results after attack is used and how the target pokemon loses health because of the attack
+	 * @param target - takes in the pokemon being attacked 
+	 * @return attackSuccess - this returns whether the attack went through or not depending on whether the pokemon has the required energy attached to it
+	 */
 	public boolean attackTwo(Pokemon target) {
 		if(this.matchingEnergy >= 1 && this.attachEnergy >= 2) {
 			int currentHp = target.getHp();

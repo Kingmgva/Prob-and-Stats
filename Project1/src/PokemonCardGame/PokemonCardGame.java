@@ -1,22 +1,27 @@
 /**
- * This class is where the bulk of the pokemon card game is created and is the main engine that sets up the game and runs the game.
+ * This class is used to initialize the two players, print instructions, and start up the pokemon game
  * 
  * @author Melvin Vazquez
  */
 package PokemonCardGame;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
-
 public class PokemonCardGame {
+	/**
+	 * THe variables for two players and the scanner created for player to use 
+	 */
 	Player player1 = new Player();
 	Player player2 = new Player();
 	Scanner input = new Scanner(System.in);
-	
+	/**
+	 * Gets the method from player class to set the name of both Players
+	 */
 	public PokemonCardGame(){
 		player1.setName("Player1");
 		player2.setName("Player2");
 	}
+	/**
+	 * Prints the instructions of the game, how to win, and how to play
+	 */
 	public void instructions() {
 		System.out.println("Would you like to see the instructions on how to play the game?");
 		String userInput = input.next();
@@ -42,6 +47,9 @@ public class PokemonCardGame {
 			}
 		}
 	}
+	/**
+	 * This checks whether the user is ready to start game and if they are it will run the set up game method
+	 */
 	public void startUp() {
 		instructions();
 		System.out.println("Are you ready to start game? (yes or no)");
@@ -62,6 +70,9 @@ public class PokemonCardGame {
 			}
 		}
 	}
+	/**
+	 * This sets up the board for each player and then calls the run game method
+	 */
 	public void setUpGame() {
 		int player1ReshuffleCount;
 		int player2ReshuffleCount;
@@ -78,6 +89,9 @@ public class PokemonCardGame {
 		player2.setBoard();
 		runGame();
 	}
+	/**
+	 * This runs the game and loops between each player turn until a winner is found 
+	 */
 	public void runGame() {
 		boolean winner = false;
 		System.out.println(player1.getName() + " your board consists of: " );
@@ -95,4 +109,3 @@ public class PokemonCardGame {
 
 	}
 }
-
