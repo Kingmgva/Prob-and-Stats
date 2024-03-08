@@ -14,7 +14,7 @@ public class TestMonteCarlo {
 	 */
 	public static void main(String[]args) {
 		MonteCarlo test = new MonteCarlo();
-		test.runPokemonMonteCarlo();
+		//test.runPokemonMonteCarlo();
 		test.runCharizardMonteCarlo();
 	}
 

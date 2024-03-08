@@ -231,7 +231,6 @@ public class MonteCarlo {
 				}
 			}
 			probabilityResult = (bricked/(double)(notBricked+bricked)); //calculates the results 
-			System.out.println("You have " + insidePrize + " rare candies inside your prize pool");
 			System.out.println("Your deck is bricked " + bricked + " times when there are " + candyCount + " rare candies in deck");
 			System.out.println("Your deck is not bricked " + notBricked + " times when there are " + candyCount + " rare candies in deck");
 			System.out.println("Probability of deck being bricked with " + candyCount + " rare candies is: " + probabilityResult + "\n");
