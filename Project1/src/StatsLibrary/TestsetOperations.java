@@ -25,8 +25,8 @@ public class TestsetOperations {
 		ArrayList<String> List2 = new ArrayList<>(Arrays.asList(weekend));
 		ArrayList<String> List3 = new ArrayList<>(Arrays.asList(subSetOfWeekdays));
 		test.setUnion(List1, List2);
-		test.setIntersection(List1, List2);
-		System.out.println(test.complement(List1, List3));
+		System.out.println("Intersection: " + test.setIntersection(List1, List2));
+		System.out.println("Complement: " + test.complement(List1, List3));
 		
 	}
 

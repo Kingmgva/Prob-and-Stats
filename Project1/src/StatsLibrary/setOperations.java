@@ -40,7 +40,7 @@ public class setOperations {
 				}
 			}
 		}
-		System.out.println(unionList);
+		System.out.println( "Union: " + unionList);
 	}
 	/**
 	 * This method checks both lists to see which values are in both list 1 and list 2, then adds it to one list and returns that list
